@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Suma";
+}
+
+<h2>Suma de dos números</h2>
+
+<form method="get" action="/Operations/Add">
+    <div class="mb-3">
+        <label for="a" class="form-label">Número 1:</label>
+        <input type="number" step="any" class="form-control" id="a" name="a" required />
+    </div>
+    <div class="mb-3">
+        <label for="b" class="form-label">Número 2:</label>
+        <input type="number" step="any" class="form-control" id="b" name="b" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Calcular</button>
+</form>
+
+@if (ViewData["Result"] != null)
+{
+    <div class="alert alert-success mt-3">
+        <strong>Resultado:</strong> @ViewData["Result"]
+    </div>
+}
