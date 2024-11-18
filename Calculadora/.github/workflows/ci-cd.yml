@@ -47,7 +47,7 @@ jobs:
         run: |
           dotnet publish -c Release -o ./output
 
-      # 3. Deploy to GitHub Pages
+      # 3. Deploy to GitHub Pages 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
