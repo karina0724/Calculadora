@@ -1,0 +1,55 @@
+﻿name: ASP.NET CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Check out the code
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      # 2. Set up .NET
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0' # Cambia según la versión de .NET que estés usando
+
+      # 3. Restore dependencies
+      - name: Restore dependencies
+        run: dotnet restore
+
+      # 4. Build the application
+      - name: Build project
+        run: dotnet build --no-restore --configuration Release
+
+      # 5. Run tests
+      - name: Run tests
+        run: dotnet test --no-build --verbosity normal
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Check out the code
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      # 2. Build and publish the application
+      - name: Publish the app
+        run: |
+          dotnet publish -c Release -o ./output
+
+      # 3. Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output
